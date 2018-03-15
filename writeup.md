@@ -25,7 +25,7 @@ The goals / steps of this project are the following:
 [Histogram2]: ./dataset/histogram_testset.png "Histogram of Test Dataset"
 [Normalization]: ./dataset/normalization.jpg "Normalization"
 [GradientDescent]: ./dataset/gradientdescent.png "GD"
-[Adam]: ./dataset/adam.png "Adam"
+[Adam]: ./dataset/Adam.png "Adam"
 [RMSProp]: ./dataset/RMSprop.png "RMSProp"
 [Test Image 1]: ./test-images/test_image_1.jpg "Image 1"
 [Test Image 2]: ./test-images/test_image_2.jpg "Image 2"
