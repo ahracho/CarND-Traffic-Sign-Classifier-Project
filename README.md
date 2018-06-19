@@ -16,6 +16,12 @@ My final model results were:
 * test set accuracy of 92.4%
 
 But, I couldn't get good results from traffic sign images found on web. It will be tuned soon.
+---
+After applying batch normalization in my network, accuracy has been improved:
+* Train Accuracy = 1.000
+* Validation Accuracy = 0.958
+* Test Accuracy = 0.933
+And, with my test images, Lenet classfies correctly 4 out of 5 images at most (it normally has 40% accuracy with test images).
 
 
 ## Outputs
