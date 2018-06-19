@@ -16,6 +16,7 @@ My final model results were:
 * test set accuracy of 92.4%
 
 But, I couldn't get good results from traffic sign images found on web. It will be tuned soon.
+
 ---
 After applying batch normalization in my network, accuracy has been improved:
 * Train Accuracy = 1.000
