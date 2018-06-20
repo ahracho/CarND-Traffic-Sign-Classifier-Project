@@ -24,6 +24,13 @@ After applying batch normalization in my network, accuracy has been improved:
 * Test Accuracy = 0.933
 And, with my test images, Lenet classfies correctly 4 out of 5 images at most (it normally has 40% accuracy with test images).
 
+---
+After fixing data imbalance with SMOTEENN method (Combined Under and Oversampling):
+* Train Accuracy = 1.000
+* Validation Accuracy = 0.949
+* Test Accuracy = 0.932
+And, with test images, generally gets 60% accuracy. Though Validation and Test accuracy are as similar as previous model, this one gets a bit more precise on classifying test images.
+
 
 ## Outputs
 ---
