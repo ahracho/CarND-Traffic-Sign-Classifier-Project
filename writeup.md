@@ -33,6 +33,7 @@ The goals / steps of this project are the following:
 [Test Image 4]: ./test-images/test_image_4.jpg "Image 4"
 [Test Image 5]: ./test-images/test_image_5.jpg "Image 5"
 [Top K]: ./dataset/top_k.png "Top K"
+[SMOTEENN]: ./dataset/SMOTEENN.png "SMOTEENN"
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
@@ -74,6 +75,10 @@ Train / Validation / Test sets should have similar distribution so as to get mea
 **Test Dataset**  
 ![Test Dataset][Histogram2]  
 
+**After SMOTENN**
+Due to imbalance within classes, test accuracy stays low, so I apply method to balance data sets. I tried combined under/over-sampling technique, SMOTENN. Histogram after applying it looks like below.  
+![SMOTENN][SMOTENN]  
+
 
 ### Design and Test a Model Architecture
 
@@ -105,6 +110,21 @@ def pixel_normalization(dataset):
 
 I used \\(\frac { X\quad -\quad \mu  }{ \sigma }\\) to normalize pixel data. Images get different as below after normalization.  
 
+I tried another normalization method in cv2 package. Since equalizeHist() only takes grayscaled image(8bit), I put each layer in the method.  
+
+~~~python
+def preprocess_data(data):
+    data_norm = []
+    for i in range(len(data)):
+        image = data[i]
+        image[:,:,0] = cv2.equalizeHist(image[:,:,0])
+        image[:,:,1] = cv2.equalizeHist(image[:,:,1])
+        image[:,:,2] = cv2.equalizeHist(image[:,:,2])
+        image = image/255.-.5
+        data_norm.append(image)
+    return np.array(data_norm, dtype=np.float32())
+~~~
+
 ![Normalization][Normalization]  
 
 
@@ -116,22 +136,26 @@ My final model consisted of the following layers:
 |:---------------------:|:---------------------------------------------:| 
 | Input         		| 32x32x3 RGB image   							| 
 | Convolution 5x5     	| 1x1 stride, valid padding, outputs 28x28x6 	|
-| tanh					|												|
+| tanh -> changed to relu					|												|
 | Max pooling	      	| 2x2 stride,  outputs 14x14x6 				|
 | Convolution 5x5     	| 1x1 stride, valid padding, outputs 10x10x16 	|
-| tanh					|												|
+| tanh -> changed to relu					|												|
 | Max pooling	      	| 2x2 stride,  outputs 5x5x16 				|
 | Flatten	      	| 5x5x16 to 1x400 				|
 | Fully connected		| 400 to 120, ReLu        								|
 | Fully connected		| 120 to 43        									|
 
 I found out for the convolution layers, using tanh leads to better results than relu. And removed the last fully connected layer, because I thought it drives overfitting on training data. After some epochs training accuracy is close to 100% but validation accuracy was not increased with 3 fully connected layer. So I removed the last one so as to simplify the network and solve overfitting problem. Other than that, I used the same architecture as LeNet Lab. I tried smaller convolution kernel size 3x3 but there was no big improvement.
+
+After submission, I added batch normalization layer for each. It definitely increased the accuracy on validation and test images.  
  
 
 #### (3) Hyperparameters
 
 - Optimizer  
 I tried several optimizers: Gradient Descent, Adam Optimizer, and RMSProp. As appeared in graphs below, during 50 epochs gradient descent gets better but it was too slow. Adam and RMSprop get similar result but normally RMSprop leads better result, so I chose RMSprop Optimizer.  
+
+On revision, I changed back to Adam Optimizer.
 
 **Gradient Descent**  
 ![Gradient Descent][GradientDescent]    
